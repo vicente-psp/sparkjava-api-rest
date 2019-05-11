@@ -1,2 +1,13 @@
-.idea/
-sparkjavaapi.iml
+HELP.md
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+*.mvn/
+mvnw
+mvnw.cmd
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
