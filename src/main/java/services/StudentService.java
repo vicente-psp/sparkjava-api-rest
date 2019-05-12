@@ -2,42 +2,49 @@ package services;
 
 import entities.Student;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 
 public class StudentService {
 
-    private int idMax = 0;
+    private int id = 0;
 
-    private List<Student> students = new ArrayList<>();
+    private HashMap<String, Student> studentHashMap = new HashMap<>();;
 
     public Student save(Student student) {
-        generateId();
-        student.setId(idMax);
-        students.add(student);
+        student.setId(getNextId());
+        student.setCreationDate(new Date());
+        studentHashMap.put(String.valueOf(student.getId()), student);
         return student;
     }
     
     public Student update(Student student, int id) {
-        remove(id);
-        students.add(student);
-        return student;
+        Student studentToUpdate = findById(id);
+
+        studentToUpdate.setName(student.getName());
+        studentToUpdate.setEnrollment(student.getEnrollment());
+        studentToUpdate.setUpdateDate(new Date());
+
+//        studentHashMap.put(String.valueOf(student.getId()), studentToUpdate);
+        return studentToUpdate;
     }
     
     public void remove(int id) {
-        students.removeIf(item -> item.getId() == id);
+        studentHashMap.remove(String.valueOf(id));
     }
 
-    public List<Student> listAll() {
-        return students;
+    public Student findById(int id) {
+        return studentHashMap.get(String.valueOf(id));
     }
 
-    private void generateId() {
-        students.forEach(item -> {
-            if (item.getId() > idMax) {
-                idMax = item.getId();
-            }
-        });
+    public Collection<Student> listAll() {
+        return studentHashMap.values();
+    }
+
+
+    private int getNextId() {
+        return ++this.id;
     }
 
 }
