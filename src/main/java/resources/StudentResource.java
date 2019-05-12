@@ -1,11 +1,17 @@
 package resources;
 
+import services.StudentService;
+
 import static spark.Spark.*;
 
 public class StudentResource {
 
+
     public static void main(String[] args) {
-        get("/students", (req, res) -> "Hello World");
+        StudentService studentService = new StudentService();
+        get("/students", (req, res) -> {
+            return studentService.listAll();
+        });
     }
 
 }
